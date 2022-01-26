@@ -145,7 +145,7 @@ function round(number, precision) {
 function dpTable(val, table) {
   let isx10 = false;
   let isCheckRound = 0;
-  if (!Number.isInteger(val)) {
+  if (!Number.isInteger(val) || !Number.isInteger(table[1])) {
     isx10 = true;
     table = table.map(val => val * 10);
     val = val * 10;
@@ -256,7 +256,7 @@ getStatusCondidate = (val) => {
   let ans = [];
   for (let key in STATUSES) {
     const dp = dpTable(val, STATUSES[key]);
-    if (dp[0] > 0 && dp.length < 10) {
+    if (dp[0] > 0 && dp.length < 7) {
       //console.log(key);
       ans.push(key);
     }
