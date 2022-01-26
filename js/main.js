@@ -28,10 +28,12 @@ const STATUSES = {
   CRIT_DMG: [0, 5.4, 6.2, 7.0, 7.8]
 };
 
+let selectedStatus = "ATK";
+
 $(function () {
-  $(".status-type, .status-val").on("change", function () {
+  $(".status-val").on("change", function () {
     const p = $(this).parent();
-    const type = p.children(".status-type").val();
+    const type = selectedStatus;
     console.log(type);
     const val = parseFloat(p.children(".status-val").val());
     const status = STATUSES[type]
@@ -109,16 +111,18 @@ $(function () {
             text = "会心率";
             break;
           case "CRIT_DMG":
-            text = "会心ダメージ";
+            text = "会心ダメ";
             break;
         };
         const html = `<button type="button" class="status-selector" value=${element}>${text}</button>`;
         $(this).after(html);
         $(".status-selector").on("click", function () {
           const p = $(this).parent();
-          const type = $(this).attr("value")
-          p.children(".status-type").val(type);
-          p.children(".status-type").change();
+          const type = $(this).attr("value");
+          const typeName = $(this).text();
+          selectedStatus = type;
+          p.children(".status-val").change();
+          p.children(".type").text(typeName);
         });
       }
     }
