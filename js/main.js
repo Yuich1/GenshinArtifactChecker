@@ -75,6 +75,7 @@ $(function () {
     const p = $(this).parent();
     const val = parseFloat(p.children(".status-val").val());
     const ans = getStatusCondidate(val);
+    console.log(ans);
     $(".status-selector").remove();
     if (ans.length > 0) {
       for (let i = 0; i < ans.length; i++) {
@@ -144,13 +145,17 @@ function round(number, precision) {
 
 function dpTable(val, table) {
   let isx10 = false;
-  let isCheckRound = 0;
+  let isCheckRounding = false;
+  let checkCount = 0;
+  if(!Number.isInteger(table[1])){
+    isCheckRounding = true;
+  }
   if (!Number.isInteger(val) || !Number.isInteger(table[1])) {
     isx10 = true;
     table = table.map(val => val * 10);
     val = val * 10;
   }
-
+  console.log(`aaaaa${val}`);
   let dp = generate2DArray(table.length, val + 1);
   let dpPath = generate2DArray(table.length, val + 1);
 
@@ -181,16 +186,16 @@ function dpTable(val, table) {
 
   let ans = getPathElement(dpPath, table);
 
-  if (isCheckRound == 0 && isx10 && dp[dp.length - 1][dp[0].length - 1] == 999) {
-    isCheckRound = 1;
+  if (checkCount == 0 && isCheckRounding && dp[dp.length - 1][dp[0].length - 1] == 999) {
+    checkCount = 1;
     val = val + 1;
     dp = generate2DArray(table.length, val + 1);
     dpPath = generate2DArray(table.length, val + 1);
     dp[0][0] = 0;
     t();
     ans = getPathElement(dpPath, table);
-  } if (isCheckRound == 1 && isx10 && dp[dp.length - 1][dp[0].length - 1] == 999) {
-    isCheckRound = 2;
+  } if (checkCount == 1 && isCheckRounding && dp[dp.length - 1][dp[0].length - 1] == 999) {
+    checkCount = 2;
     val = val - 2;
     dp = generate2DArray(table.length, val + 1);
     dpPath = generate2DArray(table.length, val + 1);
@@ -257,6 +262,7 @@ getStatusCondidate = (val) => {
   for (let key in STATUSES) {
     const dp = dpTable(val, STATUSES[key]);
     if (dp[0] > 0 && dp.length < 7) {
+      console.log(dp.length);
       //console.log(key);
       ans.push(key);
     }
