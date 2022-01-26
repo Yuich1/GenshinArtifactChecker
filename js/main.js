@@ -1,0 +1,218 @@
+/**
+ * @author Yuichi<https://twitter.com/2qrbgxpsaWEziml?s=20>
+ * @version 1.3.3
+ */
+const ATK = [0, 14, 16, 18, 19];
+const DEF = [0, 16, 19, 21, 23];
+const ATK_RATE = [0, 4.1, 4.7, 5.3, 5.8];
+const DEF_RATE = [0, 5.1, 5.8, 6.6, 7.3];
+const HP = [0, 209, 239, 269, 299];
+const HP_RATE = [0, 4.1, 4.7, 5.3, 5.8];
+const EL_MASTERY = [0, 16, 19, 21, 23];
+const EN_RECHARGE = [0, 4.5, 5.2, 5.8, 6.5];
+const CRIT_RATE = [0, 2.7, 3.1, 3.5, 3.9];
+const CRIT_DMG = [0, 5.4, 6.2, 7.0, 7.8];
+
+const STATUS = [ATK, DEF, ATK_RATE, DEF_RATE, HP, HP_RATE, EL_MASTERY, EN_RECHARGE, CRIT_RATE, CRIT_DMG];
+
+const STATUSES = {
+  ATK: [0, 14, 16, 18, 19],
+  DEF: [0, 16, 19, 21, 23],
+  ATK_RATE: [0, 4.1, 4.7, 5.3, 5.8],
+  DEF_RATE: [0, 5.1, 5.8, 6.6, 7.3],
+  HP: [0, 209, 239, 269, 299],
+  HP_RATE: [0, 4.1, 4.7, 5.3, 5.8],
+  EL_MASTERY: [0, 16, 19, 21, 23],
+  EN_RECHARGE: [0, 4.5, 5.2, 5.8, 6.5],
+  CRIT_RATE: [0, 2.7, 3.1, 3.5, 3.9],
+  CRIT_DMG: [0, 5.4, 6.2, 7.0, 7.8]
+};
+
+$(function () {
+  $(".status-type, .status-val").on("change", function () {
+    const p = $(this).parent();
+    const type =  p.children(".status-type").val();
+    const val = parseFloat(p.children(".status-val").val());
+    const status = STATUSES[type]
+    const ans = dpTable(val, status);
+    console.log(ans);
+    let low = 0, mid = 0, high = 0, max = 0;
+    ans.forEach(e => {
+      switch (e) {
+        case status[1]:
+          low++;
+          break;
+        case status[2]:
+          mid++;
+          break;
+        case status[3]:
+          high++;
+          break;
+        case status[4]:
+          max++;
+          break;
+      }
+    });
+    p.children(".progress-right").text(status[4] * ans.length);
+    const bar = p.children(".progress");
+
+    const lowRate = status[1] * low / (status[4] * ans.length) * 100;
+    bar.children(".progress-bar-low").attr("style", `width: ${lowRate}%`);
+    bar.children(".progress-bar-low").text(`低:${low}回`);
+    const midRate = status[2] * mid / (status[4] * ans.length) * 100;
+    bar.children(".progress-bar-mid").attr("style", `width: ${midRate}%`);
+    bar.children(".progress-bar-mid").text(`中:${mid}回`);
+    const highRate = status[3] * high / (status[4] * ans.length) * 100;
+    bar.children(".progress-bar-high").attr("style", `width: ${highRate}%`);
+    bar.children(".progress-bar-high").text(`高:${high}回`);
+    const maxRate = status[4] * max / (status[4] * ans.length) * 100;
+    bar.children(".progress-bar-max").attr("style", `width: ${maxRate}%`);
+    bar.children(".progress-bar-max").text(`最高:${max}回`);
+  });
+});
+
+$(function () {
+  $("#kira").on("click", function () {
+    const button = $("#kira");
+    isKira = !isKira;
+    if (isKira) {
+      button.attr("class", "btn btn-default btn-sm kira");
+      button.html("キラを消す");
+    } else {
+      button.attr("class", "btn btn-default btn-sm no-kira");
+      button.html("キラを付ける");
+    }
+    getResultData();
+    this.blur();
+  });
+});
+
+function round(number, precision) {
+  let shift = function (number, precision, reverseShift) {
+    if (reverseShift) {
+      precision = -precision;
+    }
+    let numArray = ("" + number).split("e");
+    return +(numArray[0] + "e" + (numArray[1] ? +numArray[1] + precision : precision));
+  };
+  return shift(Math.round(shift(number, precision, false)), precision, true);
+}
+
+function dpTable(val, table) {
+  let isx10 = false;
+  let isCheckRound = 0;
+  if (Math.ceil(table[1]) - Math.floor(table[1]) > 0) {
+    isx10 = true;
+    table = table.map(val => val * 10);
+    val = val * 10;
+  }
+
+  let dp = generate2DArray(table.length, val + 1);
+  let dpPath = generate2DArray(table.length, val + 1);
+
+  dp[0][0] = 0;
+
+
+  t = () => {
+    for (let i = 1; i < table.length; i++) {
+      for (let j = 0; j < val + 1; j++) {
+        if (j - table[i] >= 0) {
+          if ((dp[i][j - table[i]] + 1) < (dp[i - 1][j])) {
+            dp[i][j] = dp[i][j - table[i]] + 1;
+            dpPath[i][j] = [i, j - table[i]];
+          } else {
+            dp[i][j] = dp[i - 1][j];
+            dpPath[i][j] = [i - 1, j];
+          }
+          //dp[i][j] = Math.min(dp[i][j - table[i]] + 1, dp[i - 1][j]);
+        } else {
+          dp[i][j] = dp[i - 1][j];
+          dpPath[i][j] = [i - 1, j];
+        }
+        //console.log(`${i}, ${j}, dp=${dp[i][j]}`);
+      }
+    }
+  }
+  t();
+
+  let ans = getPathElement(dpPath, table);
+
+  if (isCheckRound == 0 && dp[dp.length - 1][dp[0].length - 1] == 999) {
+    isCheckRound = 1;
+    val = val + 1;
+    dp = generate2DArray(table.length, val + 1);
+    dpPath = generate2DArray(table.length, val + 1);
+    dp[0][0] = 0;
+    t();
+    ans = getPathElement(dpPath, table);
+  } if (isCheckRound == 1 && dp[dp.length - 1][dp[0].length - 1] == 999) {
+    isCheckRound = 2;
+    val = val - 2;
+    dp = generate2DArray(table.length, val + 1);
+    dpPath = generate2DArray(table.length, val + 1);
+    dp[0][0] = 0;
+    t();
+    ans = getPathElement(dpPath, table);
+  }
+  if (isx10) {
+    ans = ans.map(val => val / 10);
+  }
+  //console.log(ans);
+  return ans;
+}
+
+generate2DArray = (m, n) => {
+  let arr = new Array(m);
+  for (var i = 0; i < m; i++) {
+    arr[i] = new Array(n).fill(999);
+  }
+  return arr;
+};
+
+getPathElement = (dpPath, table) => {
+  let m = dpPath.length - 1;
+  let n = dpPath[0].length - 1;
+
+  let count = 1000;
+  let element = new Array();
+
+  let low = 0;
+  let mid = 0;
+  let high = 0;
+  let max = 0;
+
+  if (dpPath[m][n] == 999) {
+    return element;
+  }
+  while (n > 0) {
+    let current_m = m;
+    let current_n = n;
+    m = dpPath[m][n][0];
+    n = dpPath[m][n][1];
+    if (m - current_m == -1 && n == current_n) {
+
+    } else {
+      element.push(table[m]);
+      m == 1 ? low++ : 0;
+      m == 2 ? mid++ : 0;
+      m == 3 ? high++ : 0;
+      m == 4 ? max++ : 0;
+    }
+    if (--count < 0) {
+      break;
+    }
+  }
+  if (low + mid + high + max > 0) {
+    //console.log(`低：${low}回, 中：${mid}回, 高：${high}回, 最高：${max}回`);
+  };
+  return element;
+}
+
+getStatusCondidate = (val) => {
+  for (let key in STATUSES) {
+    const dp = dpTable(val, STATUSES[key]);
+    if (dp[0] > 0 && dp.length < 10) {
+      console.log(key);
+    }
+  }
+}

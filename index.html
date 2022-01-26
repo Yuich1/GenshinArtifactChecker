@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-158949689-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "UA-158949689-2");
+  </script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>艦これ砲撃支援命中計算機 跡地</title>
+  <meta name="title" content="艦これ砲撃支援命中計算機 跡地" />
+  <meta name="description" content="艦これの砲撃支援を計算できるサイトです。命中率、撃破率、命中時撃破率などの計算が行えます。" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  <link rel="shortcut icon" href="./images/icon/favicon.ico" />
+  <!--  css更新時はverを変更する  -->
+  <link rel="stylesheet" href="./css/style.css?ver=1.3.3.4" />
+  <script type="text/javascript" src="./js/ncmb.min.js" charset="utf-8"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script defer src="./js/main.js"></script>
+  <script type="module" src="./js/game.js?ver=1.3.0.0"></script>
+</head>
+
+<body>
+  <div class="container">
+    <header class="header">
+      <h1 class="title" style="text-decoration: line-through;">艦これ砲撃支援命中計算機 跡地</h1>
+      <h1 class="title">聖遺物上昇値チェッカー</h1>
+    </header>
+    <div class="wrapper">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="myfleet box">
+            <div class="box-header">
+              <ul class="nav nav-tabs">
+                <li>
+                  <h2 class="myfleet-title">聖遺物</h2>
+                </li>
+              </ul>
+            </div>
+            <br />
+            <div>
+              <select class="form-control status-type" name="formation">
+                <option value="ATK">攻撃力</option>
+                <option value="ATK_RATE" selected>攻撃力%</option>
+                <option value="DEF">防御力</option>
+                <option value="DEF_RATE">防御力%</option>
+                <option value="HP">HP</option>
+                <option value="HP_RATE">HP%</option>
+                <option value="EL_MASTERY">元素熟知</option>
+                <option value="EN_RECHARGE">元素チャージ効率</option>
+                <option value="CRIT_RATE">会心率</option>
+                <option value="CRIT_DMG">会心ダメージ</option>
+              </select>
+              <input type="number" class="form-control inline-b status-val" step="0.1"/>
+              <div class="progress">
+                <div class="progress-bar progress-bar-low" role="progressbar" style="width: 0%">低</div>
+                <div class="progress-bar progress-bar-mid" role="progressbar" style="width: 0%">中</div>
+                <div class="progress-bar progress-bar-high" role="progressbar" style="width: 0%">高</div>
+                <div class="progress-bar progress-bar-max" role="progressbar" style="width: 0%">最高</div>
+              </div>
+              <span class="progress-left">0</span>
+              <span class="progress-right"></span>
+            </div>
+            <div>
+              <select class="form-control status-type" name="formation">
+                <option value="ATK">攻撃力</option>
+                <option value="ATK_RATE">攻撃力%</option>
+                <option value="DEF">防御力</option>
+                <option value="DEF_RATE">防御力%</option>
+                <option value="HP">HP</option>
+                <option value="HP_RATE">HP%</option>
+                <option value="EL_MASTERY">元素熟知</option>
+                <option value="EN_RECHARGE" selected>元素チャージ効率</option>
+                <option value="CRIT_RATE">会心率</option>
+                <option value="CRIT_DMG">会心ダメージ</option>
+              </select>
+              <input type="number" class="form-control inline-b status-val" step="0.1"/>
+              <div class="progress">
+                <div class="progress-bar progress-bar-low" role="progressbar" style="width: 0%">低</div>
+                <div class="progress-bar progress-bar-mid" role="progressbar" style="width: 0%">中</div>
+                <div class="progress-bar progress-bar-high" role="progressbar" style="width: 0%">高</div>
+                <div class="progress-bar progress-bar-max" role="progressbar" style="width: 0%">最高</div>
+              </div>
+              <span class="progress-left">0</span>
+              <span class="progress-right"></span>
+            </div>
+            <div>
+              <select class="form-control status-type" name="formation">
+                <option value="ATK">攻撃力</option>
+                <option value="ATK_RATE">攻撃力%</option>
+                <option value="DEF">防御力</option>
+                <option value="DEF_RATE">防御力%</option>
+                <option value="HP">HP</option>
+                <option value="HP_RATE">HP%</option>
+                <option value="EL_MASTERY">元素熟知</option>
+                <option value="EN_RECHARGE">元素チャージ効率</option>
+                <option value="CRIT_RATE" selected>会心率</option>
+                <option value="CRIT_DMG">会心ダメージ</option>
+              </select>
+              <input type="number" class="form-control inline-b status-val" step="0.1"/>
+              <div class="progress">
+                <div class="progress-bar progress-bar-low" role="progressbar" style="width: 0%">低</div>
+                <div class="progress-bar progress-bar-mid" role="progressbar" style="width: 0%">中</div>
+                <div class="progress-bar progress-bar-high" role="progressbar" style="width: 0%">高</div>
+                <div class="progress-bar progress-bar-max" role="progressbar" style="width: 0%">最高</div>
+              </div>
+              <span class="progress-left">0</span>
+              <span class="progress-right"></span>
+            </div>
+            <div>
+              <select class="form-control status-type" name="formation">
+                <option value="ATK">攻撃力</option>
+                <option value="ATK_RATE">攻撃力%</option>
+                <option value="DEF">防御力</option>
+                <option value="DEF_RATE">防御力%</option>
+                <option value="HP">HP</option>
+                <option value="HP_RATE">HP%</option>
+                <option value="EL_MASTERY">元素熟知</option>
+                <option value="EN_RECHARGE">元素チャージ効率</option>
+                <option value="CRIT_RATE">会心率</option>
+                <option value="CRIT_DMG" selected>会心ダメージ</option>
+              </select>
+              <input type="number" class="form-control inline-b status-val" step="0.1"/>
+              <div class="progress">
+                <div class="progress-bar progress-bar-low" role="progressbar" style="width: 0%">低</div>
+                <div class="progress-bar progress-bar-mid" role="progressbar" style="width: 0%">中</div>
+                <div class="progress-bar progress-bar-high" role="progressbar" style="width: 0%">高</div>
+                <div class="progress-bar progress-bar-max" role="progressbar" style="width: 0%">最高</div>
+              </div>
+              <span class="progress-left">0</span>
+              <span class="progress-right"></span>
+            </div>
+            
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="enemy box">
+            <h2 class="box-title">敵艦船</h2>
+            <table class="status" data-toggle="tooltip" title="任意のステータスを設定可能">
+              <tbody>
+                <tr>
+                  <td>耐久</td>
+                  <td>
+                    <input type="number" class="form-control enemy-status hp" value="66" />
+                  </td>
+                  <td>装甲</td>
+                  <td>
+                    <input type="number" class="form-control enemy-status armor" value="68" />
+                  </td>
+                  <td>回避</td>
+                  <td>
+                    <input type="number" class="form-control enemy-status avoidance" value="74" />
+                  </td>
+                  <td>運</td>
+                  <td>
+                    <input type="number" class="form-control enemy-status luck" value="66" />
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="saved-info">
+              <button type="button" class="btn btn-info status-reset">初期値に戻す</button>
+            </div>
+          </div>
+          <div class="setup box">
+            <h2 class="box-title">設定</h2>
+            <table>
+              <tbody>
+                <tr>
+                  <td>味方陣形</td>
+                  <td>
+                    <div class="form-group">
+                      <select class="form-control my-formation" name="formation">
+                        <option value="0">単縦陣</option>
+                        <option value="1">複縦陣</option>
+                        <option value="2">輪形陣</option>
+                        <option value="3">梯形陣</option>
+                        <option value="4">単横陣</option>
+                        <option value="5">警戒陣</option>
+                      </select>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="hasTooltip" data-toggle="tooltip" title="CL1:通常, CL2:クリティカル, 自動:CL2率を計算">
+                      クリティカル
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-group">
+                      <select class="form-control critical" name="critical">
+                        <option value="1">CL1</option>
+                        <option value="2">CL2</option>
+                        <option value="3" selected>自動</option>
+                      </select>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>敵陣形</td>
+                  <td>
+                    <div class="form-group">
+                      <select class="form-control enemy-formation" name="formation">
+                        <option value="0">単縦陣</option>
+                        <option value="1">複縦陣</option>
+                        <option value="2">輪形陣</option>
+                        <option value="3">梯形陣</option>
+                        <option value="4">単横陣</option>
+                        <option value="5">警戒陣</option>
+                      </select>
+                    </div>
+                  </td>
+                  <td>火力キャップ</td>
+                  <td><input type="number" class="form-control inline-b cap" value="170" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>交戦形態</td>
+                  <td>
+                    <div class="form-group">
+                      <select class="form-control engagement" name="engagement">
+                        <option value="1.2">T字有利</option>
+                        <option value="1.0" selected>同航</option>
+                        <option value="0.8">反航</option>
+                        <option value="0.6">T字不利</option>
+                        <option value="1.2,1.0,0.8,0.6">自動</option>
+                      </select>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="saiunSet"></div>
+                  </td>
+                  <td>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="result box box">
+            <h2 class="box-title">計算結果</h2>
+            <!--<div class="background-img"></div>-->
+            <div class="progress">
+              <div class="progress-bar progress-bar-fine" role="progressbar" style="width: 20%">低</div>
+              <div class="progress-bar progress-bar-shoha" role="progressbar" style="width: 20%">中</div>
+              <div class="progress-bar progress-bar-tyuha" role="progressbar" style="width: 20%">高</div>
+              <div class="progress-bar progress-bar-taiha" role="progressbar" style="width: 20%">最高</div>
+            </div>
+            <p class="box-title">詳細</p>
+            <div class="grid-result">
+              <div class="result-left"></div>
+              <div class="result-right"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="description">
+      <h2 class="title">開発終了</h2>
+      <p>
+        <a href="https://twitter.com/2qrbgxpsaWEziml?s=20" target="_blank">twitter</a><br />
+      </p>
+
+      <h2 class="title">免責事項</h2>
+      <p>
+        当サイトでは推定式を多く使用しているため、計算結果の正確性については保障いたしかねます。<br />
+        また、当サイトの利用によって発生した損害について一切の責任を負いません。
+      </p>
+    </div>
+  </div>
+  <!-- Modal content -->
+  <div id="game" class="modal fade" data-keybord="false" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div id="gameView"></div>
+          <input type="text" class="form-control" id="ranking-name" name="name" size="16" autocomplete="off"
+            style="position: absolute; top: 320px; left: 46px; width: inherit" />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(document).ready(function () {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+  </script>
+</body>
