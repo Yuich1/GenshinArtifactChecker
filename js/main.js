@@ -75,7 +75,6 @@ $(function () {
     const p = $(this).parent();
     const val = parseFloat(p.children(".status-val").val());
     const ans = getStatusCondidate(val);
-    console.log(ans);
     $(".status-selector").remove();
     if (ans.length > 0) {
       for (let i = 0; i < ans.length; i++) {
@@ -122,6 +121,7 @@ $(function () {
           selectedStatus = type;
           p.children(".status-val").change();
           p.children(".type").text(typeName);
+          //$(".status-selector").remove();
         });
       }
     }
@@ -264,7 +264,7 @@ getStatusCondidate = (val) => {
     if (dp[0] > 0 && dp.length < 7) {
       console.log(dp.length);
       //console.log(key);
-      ans.push(key);
+      ans.unshift(key);
     }
   }
   return ans;
