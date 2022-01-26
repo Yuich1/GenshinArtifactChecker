@@ -34,11 +34,9 @@ $(function () {
   $(".status-val").on("change", function () {
     const p = $(this).parent();
     const type = selectedStatus;
-    console.log(type);
     const val = parseFloat(p.children(".status-val").val());
     const status = STATUSES[type]
     const ans = dpTable(val, status);
-    console.log(ans);
     let low = 0, mid = 0, high = 0, max = 0;
     ans.forEach(e => {
       switch (e) {
@@ -183,7 +181,7 @@ function dpTable(val, table) {
 
   let ans = getPathElement(dpPath, table);
 
-  if (isCheckRound == 0 && dp[dp.length - 1][dp[0].length - 1] == 999) {
+  if (isCheckRound == 0 && isx10 && dp[dp.length - 1][dp[0].length - 1] == 999) {
     isCheckRound = 1;
     val = val + 1;
     dp = generate2DArray(table.length, val + 1);
@@ -191,7 +189,7 @@ function dpTable(val, table) {
     dp[0][0] = 0;
     t();
     ans = getPathElement(dpPath, table);
-  } if (isCheckRound == 1 && dp[dp.length - 1][dp[0].length - 1] == 999) {
+  } if (isCheckRound == 1 && isx10 && dp[dp.length - 1][dp[0].length - 1] == 999) {
     isCheckRound = 2;
     val = val - 2;
     dp = generate2DArray(table.length, val + 1);
