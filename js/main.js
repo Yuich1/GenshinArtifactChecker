@@ -31,7 +31,8 @@ const STATUSES = {
 $(function () {
   $(".status-type, .status-val").on("change", function () {
     const p = $(this).parent();
-    const type =  p.children(".status-type").val();
+    const type = p.children(".status-type").val();
+    console.log(type);
     const val = parseFloat(p.children(".status-val").val());
     const status = STATUSES[type]
     const ans = dpTable(val, status);
@@ -69,22 +70,63 @@ $(function () {
     bar.children(".progress-bar-max").attr("style", `width: ${maxRate}%`);
     bar.children(".progress-bar-max").text(`最高:${max}回`);
   });
-});
 
-$(function () {
-  $("#kira").on("click", function () {
-    const button = $("#kira");
-    isKira = !isKira;
-    if (isKira) {
-      button.attr("class", "btn btn-default btn-sm kira");
-      button.html("キラを消す");
-    } else {
-      button.attr("class", "btn btn-default btn-sm no-kira");
-      button.html("キラを付ける");
+  $(".status-val").on("input", function () {
+    const p = $(this).parent();
+    const val = parseFloat(p.children(".status-val").val());
+    const ans = getStatusCondidate(val);
+    $(".status-selector").remove();
+    if (ans.length > 0) {
+      for (let i = 0; i < ans.length; i++) {
+        const element = ans[i];
+        let text = "";
+        switch (element) {
+          case "ATK":
+            text = "攻撃力";
+            break;
+          case "ATK_RATE":
+            text = "攻撃力%";
+            break;
+          case "DEF":
+            text = "防御力";
+            break;
+          case "DEF_RATE":
+            text = "防御力%";
+            break;
+          case "HP":
+            text = "HP";
+            break;
+          case "HP_RATE":
+            text = "HP%";
+            break;
+          case "EL_MASTERY":
+            text = "元素熟知";
+            break;
+          case "EN_RECHARGE":
+            text = "元チャ";
+            break;
+          case "CRIT_RATE":
+            text = "会心率";
+            break;
+          case "CRIT_DMG":
+            text = "会心ダメージ";
+            break;
+        };
+        const html = `<button type="button" class="status-selector" value=${element}>${text}</button>`;
+        $(this).after(html);
+        $(".status-selector").on("click", function () {
+          const p = $(this).parent();
+          const type = $(this).attr("value")
+          p.children(".status-type").val(type);
+          p.children(".status-type").change();
+        });
+      }
     }
-    getResultData();
-    this.blur();
   });
+
+
+
+
 });
 
 function round(number, precision) {
@@ -101,7 +143,7 @@ function round(number, precision) {
 function dpTable(val, table) {
   let isx10 = false;
   let isCheckRound = 0;
-  if (Math.ceil(table[1]) - Math.floor(table[1]) > 0) {
+  if (!Number.isInteger(val)) {
     isx10 = true;
     table = table.map(val => val * 10);
     val = val * 10;
@@ -209,10 +251,13 @@ getPathElement = (dpPath, table) => {
 }
 
 getStatusCondidate = (val) => {
+  let ans = [];
   for (let key in STATUSES) {
     const dp = dpTable(val, STATUSES[key]);
     if (dp[0] > 0 && dp.length < 10) {
-      console.log(key);
+      //console.log(key);
+      ans.push(key);
     }
   }
+  return ans;
 }
