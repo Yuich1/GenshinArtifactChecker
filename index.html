@@ -17,7 +17,6 @@
 <body>
   <div class="container">
     <header class="header">
-      <h1 class="title" style="text-decoration: line-through;">艦これ砲撃支援命中計算機 跡地</h1>
       <h1 class="title">聖遺物上昇値チェッカー</h1>
     </header>
     <div class="wrapper">
@@ -83,128 +82,6 @@
             
           </div>
         </div>
-        <div class="col-md-6">
-          <div class="enemy box">
-            <h2 class="box-title">敵艦船</h2>
-            <table class="status" data-toggle="tooltip" title="任意のステータスを設定可能">
-              <tbody>
-                <tr>
-                  <td>耐久</td>
-                  <td>
-                    <input type="number" class="form-control enemy-status hp" value="66" />
-                  </td>
-                  <td>装甲</td>
-                  <td>
-                    <input type="number" class="form-control enemy-status armor" value="68" />
-                  </td>
-                  <td>回避</td>
-                  <td>
-                    <input type="number" class="form-control enemy-status avoidance" value="74" />
-                  </td>
-                  <td>運</td>
-                  <td>
-                    <input type="number" class="form-control enemy-status luck" value="66" />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <div class="saved-info">
-              <button type="button" class="btn btn-info status-reset">初期値に戻す</button>
-            </div>
-          </div>
-          <div class="setup box">
-            <h2 class="box-title">設定</h2>
-            <table>
-              <tbody>
-                <tr>
-                  <td>味方陣形</td>
-                  <td>
-                    <div class="form-group">
-                      <select class="form-control my-formation" name="formation">
-                        <option value="0">単縦陣</option>
-                        <option value="1">複縦陣</option>
-                        <option value="2">輪形陣</option>
-                        <option value="3">梯形陣</option>
-                        <option value="4">単横陣</option>
-                        <option value="5">警戒陣</option>
-                      </select>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="hasTooltip" data-toggle="tooltip" title="CL1:通常, CL2:クリティカル, 自動:CL2率を計算">
-                      クリティカル
-                    </div>
-                  </td>
-                  <td>
-                    <div class="form-group">
-                      <select class="form-control critical" name="critical">
-                        <option value="1">CL1</option>
-                        <option value="2">CL2</option>
-                        <option value="3" selected>自動</option>
-                      </select>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>敵陣形</td>
-                  <td>
-                    <div class="form-group">
-                      <select class="form-control enemy-formation" name="formation">
-                        <option value="0">単縦陣</option>
-                        <option value="1">複縦陣</option>
-                        <option value="2">輪形陣</option>
-                        <option value="3">梯形陣</option>
-                        <option value="4">単横陣</option>
-                        <option value="5">警戒陣</option>
-                      </select>
-                    </div>
-                  </td>
-                  <td>火力キャップ</td>
-                  <td><input type="number" class="form-control inline-b cap" value="170" />
-                  </td>
-                </tr>
-                <tr>
-                  <td>交戦形態</td>
-                  <td>
-                    <div class="form-group">
-                      <select class="form-control engagement" name="engagement">
-                        <option value="1.2">T字有利</option>
-                        <option value="1.0" selected>同航</option>
-                        <option value="0.8">反航</option>
-                        <option value="0.6">T字不利</option>
-                        <option value="1.2,1.0,0.8,0.6">自動</option>
-                      </select>
-                    </div>
-                  </td>
-                  <td>
-                    <div class="saiunSet"></div>
-                  </td>
-                  <td>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="result box box">
-            <h2 class="box-title">計算結果</h2>
-            <!--<div class="background-img"></div>-->
-            <div class="progress">
-              <div class="progress-bar progress-bar-fine" role="progressbar" style="width: 20%">低</div>
-              <div class="progress-bar progress-bar-shoha" role="progressbar" style="width: 20%">中</div>
-              <div class="progress-bar progress-bar-tyuha" role="progressbar" style="width: 20%">高</div>
-              <div class="progress-bar progress-bar-taiha" role="progressbar" style="width: 20%">最高</div>
-            </div>
-            <p class="box-title">詳細</p>
-            <div class="grid-result">
-              <div class="result-left"></div>
-              <div class="result-right"></div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
     <div class="description">
@@ -215,29 +92,11 @@
 
       <h2 class="title">免責事項</h2>
       <p>
-        当サイトでは推定式を多く使用しているため、計算結果の正確性については保障いたしかねます。<br />
-        また、当サイトの利用によって発生した損害について一切の責任を負いません。
+        当サイトの利用によって発生した損害について一切の責任を負いません。
       </p>
     </div>
   </div>
   <!-- Modal content -->
-  <div id="game" class="modal fade" data-keybord="false" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-body">
-          <div id="gameView"></div>
-          <input type="text" class="form-control" id="ranking-name" name="name" size="16" autocomplete="off"
-            style="position: absolute; top: 320px; left: 46px; width: inherit" />
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
-        </div>
-      </div>
-    </div>
-  </div>
   <script>
     $(document).ready(function () {
       $('[data-toggle="tooltip"]').tooltip();

@@ -2,18 +2,6 @@
  * @author Yuichi<https://twitter.com/2qrbgxpsaWEziml?s=20>
  * @version 1.3.3
  */
-const ATK = [0, 14, 16, 18, 19];
-const DEF = [0, 16, 19, 21, 23];
-const ATK_RATE = [0, 4.1, 4.7, 5.3, 5.8];
-const DEF_RATE = [0, 5.1, 5.8, 6.6, 7.3];
-const HP = [0, 209, 239, 269, 299];
-const HP_RATE = [0, 4.1, 4.7, 5.3, 5.8];
-const EL_MASTERY = [0, 16, 19, 21, 23];
-const EN_RECHARGE = [0, 4.5, 5.2, 5.8, 6.5];
-const CRIT_RATE = [0, 2.7, 3.1, 3.5, 3.9];
-const CRIT_DMG = [0, 5.4, 6.2, 7.0, 7.8];
-
-const STATUS = [ATK, DEF, ATK_RATE, DEF_RATE, HP, HP_RATE, EL_MASTERY, EN_RECHARGE, CRIT_RATE, CRIT_DMG];
 
 const STATUSES = {
   ATK: [0, 14, 16, 18, 19],
@@ -59,16 +47,16 @@ $(function () {
 
     const lowRate = status[1] * low / (status[4] * ans.length) * 100;
     bar.children(".progress-bar-low").attr("style", `width: ${lowRate}%`);
-    bar.children(".progress-bar-low").text(`低:${low}回`);
+    bar.children(".progress-bar-low").text(`低(${status[1]}%):${low}回`);
     const midRate = status[2] * mid / (status[4] * ans.length) * 100;
     bar.children(".progress-bar-mid").attr("style", `width: ${midRate}%`);
-    bar.children(".progress-bar-mid").text(`中:${mid}回`);
+    bar.children(".progress-bar-mid").text(`中(${status[2]}%):${mid}回`);
     const highRate = status[3] * high / (status[4] * ans.length) * 100;
     bar.children(".progress-bar-high").attr("style", `width: ${highRate}%`);
-    bar.children(".progress-bar-high").text(`高:${high}回`);
+    bar.children(".progress-bar-high").text(`高(${status[3]}%):${high}回`);
     const maxRate = status[4] * max / (status[4] * ans.length) * 100;
     bar.children(".progress-bar-max").attr("style", `width: ${maxRate}%`);
-    bar.children(".progress-bar-max").text(`最高:${max}回`);
+    bar.children(".progress-bar-max").text(`最高(${status[4]}%):${max}回`);
   });
 
   $(".status-val").on("input", function () {
@@ -155,7 +143,6 @@ function dpTable(val, table) {
     table = table.map(val => val * 10);
     val = val * 10;
   }
-  console.log(`aaaaa${val}`);
   let dp = generate2DArray(table.length, val + 1);
   let dpPath = generate2DArray(table.length, val + 1);
 
@@ -262,8 +249,6 @@ getStatusCondidate = (val) => {
   for (let key in STATUSES) {
     const dp = dpTable(val, STATUSES[key]);
     if (dp[0] > 0 && dp.length < 7) {
-      console.log(dp.length);
-      //console.log(key);
       ans.unshift(key);
     }
   }
